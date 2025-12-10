@@ -4,30 +4,33 @@ version '0.4.0'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()   // ✅ replaced jcenter (deprecated)
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:8.2.2'  // ✅ modern AGP version
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
+    namespace "name.avioli.unilinks"   // ✅ required for AGP 8+
+    compileSdkVersion 34               // ✅ updated from 28
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21               // ✅ modern minimum
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     lintOptions {
         disable 'InvalidPackage'
     }
