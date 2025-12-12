@@ -2,13 +2,15 @@ group 'name.avioli.unilinks'
 version '0.4.0'
 
 buildscript {
+    ext.kotlin_version = '1.9.25'
     repositories {
         google()
-        mavenCentral()   // ✅ replaced jcenter (deprecated)
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'  // ✅ modern AGP version
+        classpath "com.android.tools.build:gradle:8.2.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -23,15 +25,28 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace "name.avioli.unilinks"   // ✅ required for AGP 8+
-    compileSdkVersion 34               // ✅ updated from 28
+    namespace "name.avioli.unilinks"      // ✅ REQUIRED
+    compileSdkVersion 34
 
     defaultConfig {
-        minSdkVersion 21               // ✅ modern minimum
+        minSdkVersion 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {                       // ✅ REQUIRED for AGP 8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {                         // ✅ REQUIRED for AGP 8
+        jvmTarget = '1.8'
     }
 
     lintOptions {
         disable 'InvalidPackage'
     }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
